@@ -1,0 +1,10 @@
+{
+    "dev": {
+      "driver": "pg",
+      "host": "localhost",
+      "database": "postgres-udacity",
+      "user": "postgres",
+      "password": "postgres",
+      "port":"5431"
+    }
+  }
