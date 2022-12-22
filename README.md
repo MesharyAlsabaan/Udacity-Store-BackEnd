@@ -17,7 +17,22 @@ The application uses the following libraries:
 
 - Install the packages by "npm i"
 - Run the migration file "db-migrate up"
+- Run the migration file down "db-migrate down"
 - Run the application "npm run dev"
+
+
+## Enviroment Variables Set up
+
+     PORT=3000
+     NODE_ENV = dev
+     POSTGRES_USER = postgres
+     POSTGRES_PASSWORD = postgres
+     POSTGRES_HOST = localhost
+     POSTGRES_PORT = 5431
+     POSTGRES_DATABASE = postgres-udacity
+     TOKEN_SECRET = Mm12
+
+
 
 ## The database schema and and API route information
 

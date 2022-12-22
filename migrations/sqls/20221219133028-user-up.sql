@@ -10,21 +10,7 @@ CREATE TABLE Users(
     City varchar(255) NOT NULL,
     Salt varchar(255)
 );
-CREATE TABLE Orders(
-Id INT PRIMARY KEY,
-Status VARCHAR(64),
-userID BIGINT REFERENCES users(userID)
-);
 
-CREATE TABLE Products (
-    Id SERIAL PRIMARY KEY,
-    name VARCHAR(64) NOT NULL,
-    price INT NOT NULL
-);
 
-CREATE TABLE order_products(
-       id SERIAL PRIMARY KEY,
-       quantity INT,
-       product_id BIGINT REFERENCES Products(Id),
-       order_id BIGINT REFERENCES Orders(Id)
-);
+
+
