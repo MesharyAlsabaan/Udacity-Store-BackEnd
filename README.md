@@ -18,6 +18,10 @@ The application uses the following libraries:
 - Install the packages by "npm i"
 - Run the migration file "db-migrate up"
 - Run the migration file down "db-migrate down"
+- Run the migration file for test env "db-migrate up --env test"
+
+Please change the var in the .env (test or dev) 
+
 - Run the application "npm run dev"
 
 
@@ -30,6 +34,7 @@ The application uses the following libraries:
      POSTGRES_HOST = localhost
      POSTGRES_PORT = 5431
      POSTGRES_DATABASE = postgres-udacity
+     POSTGRES_DATABASE_test = postgres-udacity_test
      TOKEN_SECRET = Mm12
 
 

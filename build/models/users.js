@@ -132,10 +132,12 @@ var login = function (req, res) { return __awaiter(void 0, void 0, void 0, funct
 exports.login = login;
 //Get all users
 var getUsers = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var allUsers;
+    var z, allUsers;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
+                z = req;
+                console.log('ddd', z);
                 try {
                     jwt.verify(req.body.token, process.env.TOKEN_SECRET);
                 }
@@ -199,10 +201,12 @@ var deleteUser = function (req, res) { return __awaiter(void 0, void 0, void 0, 
                 }
                 id = req.params;
                 return [4 /*yield*/, database_1.pool.query('Delete FROM users WHERE userid = $1', [id.id])];
-            case 1: return [4 /*yield*/, (_a.sent()).rows];
+            case 1: return [4 /*yield*/, (_a.sent()).rows
+                // console.log(user)
+            ];
             case 2:
                 user = _a.sent();
-                console.log(user);
+                // console.log(user)
                 res.send('The user is not exist anymore');
                 return [2 /*return*/, true];
         }
@@ -225,7 +229,6 @@ var updateUser = function (req, res) { return __awaiter(void 0, void 0, void 0, 
                 }
                 id = req.params;
                 email = req.body.email;
-                console.log(email);
                 return [4 /*yield*/, database_1.pool.query('SELECT * FROM users WHERE userid = $1', [id.id])];
             case 1: return [4 /*yield*/, (_a.sent()).rows];
             case 2:

@@ -17,6 +17,12 @@ export const createProduct = async (req: Request, res: Response) => {
 }
 
 export const getAllProducts = async (req: Request, res: Response) => {
+  console.log(req.body.token,'body');
+  let z =     jwt.verify(req.body.token, process.env.TOKEN_SECRET)
+
+  console.log(z);
+  
+  
   try {
     jwt.verify(req.body.token, process.env.TOKEN_SECRET)
   } catch (err) {
@@ -24,6 +30,8 @@ export const getAllProducts = async (req: Request, res: Response) => {
     res.send('Invalid token')
     return false
   }
+  console.log('test');
+
   const allProducts = await (await pool.query('SELECT * FROM products')).rows
   res.send(allProducts)
   return true

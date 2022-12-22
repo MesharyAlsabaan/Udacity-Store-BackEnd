@@ -143,34 +143,17 @@ describe('create product', function () {
 });
 function getToken() {
     return __awaiter(this, void 0, void 0, function () {
-        var token;
+        var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, request.post('/user/login').set('Content-type', 'application/json').send({
-                        email: 'test@gmail.com',
+                        email: 'tes1t@gmail.com',
                         password: 'Mm1212',
                     })];
                 case 1:
-                    token = _a.sent();
-                    token = token.body;
-                    return [2 /*return*/, token];
+                    response = _a.sent();
+                    return [2 /*return*/, response.body];
             }
         });
     });
 }
-// export const createUser = async (req: Request, res: Response) => {
-//     const { firstName, lastName, address, city, email, password } = req.body
-//     let id = Math.floor(Math.random() * 10000)
-//     const emailResult = await (await pool.query('SELECT * FROM users WHERE email = $1', [email])).rows
-//     if (emailResult.length > 0) {
-//       res.send('Email is Already Exist')
-//       return
-//     }
-//     let salt = await bcrypt.genSalt()
-//     let hashedPassword = await hashPassword(password, salt)
-//     await pool.query(
-//       'INSERT INTO users(userid,firstname,lastname,address,city, email,password,salt) VALUES($1, $2,$3,$4,$5,$6,$7,$8)',
-//       [id, firstName, lastName, address, city, email, hashedPassword, salt]
-//     )
-//     res.send('Thank you for creating account')
-//   }

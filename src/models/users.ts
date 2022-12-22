@@ -51,8 +51,10 @@ export const login = async (req: Request, res: Response) => {
 
 //Get all users
 export const getUsers = async (req: Request, res: Response) => {
+
+  
   try {
-    jwt.verify(req.body.token, process.env.TOKEN_SECRET)
+    jwt.verify(req.headers.token, process.env.TOKEN_SECRET)
   } catch (err) {
     res.status(401)
     res.send('Invalid token')
@@ -66,7 +68,7 @@ export const getUsers = async (req: Request, res: Response) => {
 //Get user by id
 export const getUser = async (req: Request, res: Response) => {
   try {
-    jwt.verify(req.body.token, process.env.TOKEN_SECRET)
+    jwt.verify(req.headers.token, process.env.TOKEN_SECRET)
   } catch (err) {
     res.status(401)
     res.send('Invalid token')
@@ -84,7 +86,7 @@ export const getUser = async (req: Request, res: Response) => {
 //Delete user
 export const deleteUser = async (req: Request, res: Response) => {
   try {
-    jwt.verify(req.body.token, process.env.TOKEN_SECRET)
+    jwt.verify(req.headers.token, process.env.TOKEN_SECRET)
   } catch (err) {
     res.status(401)
     res.send('Invalid token')
@@ -92,14 +94,14 @@ export const deleteUser = async (req: Request, res: Response) => {
   }
   let id = req.params
   const user = await (await pool.query('Delete FROM users WHERE userid = $1', [id.id])).rows
-  console.log(user)
+  // console.log(user)
   res.send('The user is not exist anymore')
   return true
 }
 //Update user
 export const updateUser = async (req: Request, res: Response) => {
   try {
-    jwt.verify(req.body.token, process.env.TOKEN_SECRET)
+    jwt.verify(req.headers.token, process.env.TOKEN_SECRET)
   } catch (err) {
     res.status(401)
     res.send('Invalid token')
@@ -107,7 +109,7 @@ export const updateUser = async (req: Request, res: Response) => {
   }
   let id = req.params
   const { email } = req.body
-  console.log(email)
+  // console.log(email)
 
   const user = await (await pool.query('SELECT * FROM users WHERE userid = $1', [id.id])).rows
   if (user.length > 0) {
