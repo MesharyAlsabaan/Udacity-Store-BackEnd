@@ -4,7 +4,7 @@ var jwt = require('jsonwebtoken')
 
 export const createProduct = async (req: Request, res: Response) => {
   try {
-    jwt.verify(req.body.token, process.env.TOKEN_SECRET)
+    jwt.verify(req.headers.token, process.env.TOKEN_SECRET)
   } catch (err) {
     res.status(401)
     res.send('Invalid token')
@@ -17,14 +17,8 @@ export const createProduct = async (req: Request, res: Response) => {
 }
 
 export const getAllProducts = async (req: Request, res: Response) => {
-  console.log(req.body.token,'body');
-  let z =     jwt.verify(req.body.token, process.env.TOKEN_SECRET)
-
-  console.log(z);
-  
-  
   try {
-    jwt.verify(req.body.token, process.env.TOKEN_SECRET)
+    jwt.verify(req.headers.token, process.env.TOKEN_SECRET)
   } catch (err) {
     res.status(401)
     res.send('Invalid token')
@@ -38,7 +32,7 @@ export const getAllProducts = async (req: Request, res: Response) => {
 }
 export const getProduct = async (req: Request, res: Response) => {
   try {
-    jwt.verify(req.body.token, process.env.TOKEN_SECRET)
+    jwt.verify(req.headers.token, process.env.TOKEN_SECRET)
   } catch (err) {
     res.status(401)
     res.send('Invalid token')

@@ -4,7 +4,7 @@ var jwt = require('jsonwebtoken')
 
 export const createOrder = async (req: Request, res: Response) => {
   try {
-    jwt.verify(req.body.token, process.env.TOKEN_SECRET)
+    jwt.verify(req.headers.token, process.env.TOKEN_SECRET)
   } catch (err) {
     res.status(401)
     res.send('Invalid token')
@@ -25,7 +25,7 @@ export const createOrder = async (req: Request, res: Response) => {
 // Get order by userId
 export const getOrder = async (req: Request, res: Response) => {
   try {
-    jwt.verify(req.body.token, process.env.TOKEN_SECRET)
+    jwt.verify(req.headers.token, process.env.TOKEN_SECRET)
   } catch (err) {
     res.status(401)
     res.send('Invalid token')
