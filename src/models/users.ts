@@ -11,18 +11,35 @@ export const createUser = async (req: Request, res: Response) => {
 
   const emailResult = await (await pool.query('SELECT * FROM users WHERE email = $1', [email])).rows
   if (emailResult.length > 0) {
-    res.status(400);
+    res.status(400)
     res.send('Email is Already Exist')
     return
   }
+  
+
+  await createUserModels(id, firstName, lastName, address, city, email, password)
+
+  res.send('Thank you for creating account')
+  return
+}
+
+export async function createUserModels(
+  id: number,
+  firstName: string,
+  lastName: string,
+  address: string,
+  city: string,
+  email: string,
+  password: string,
+) {
   let salt = await bcrypt.genSalt()
   let hashedPassword = await hashPassword(password, salt)
   await pool.query(
     'INSERT INTO users(userid,firstname,lastname,address,city, email,password,salt) VALUES($1, $2,$3,$4,$5,$6,$7,$8)',
     [id, firstName, lastName, address, city, email, hashedPassword, salt]
   )
-  res.send('Thank you for creating account')
-  return;
+
+  return true;
 }
 
 // Login user and return token
@@ -30,7 +47,7 @@ export const login = async (req: Request, res: Response) => {
   const { email, password } = req.body
   const user = await (await pool.query('SELECT * FROM users WHERE email = $1', [email])).rows
 
-  if (user.length > 0) { 
+  if (user.length > 0) {
     const correctCredential = await validateLogin(password, user[0].salt, user[0].password)
 
     delete user[0].password
@@ -52,8 +69,6 @@ export const login = async (req: Request, res: Response) => {
 
 //Get all users
 export const getUsers = async (req: Request, res: Response) => {
-
-  
   try {
     jwt.verify(req.headers.token, process.env.TOKEN_SECRET)
   } catch (err) {
@@ -61,15 +76,15 @@ export const getUsers = async (req: Request, res: Response) => {
     res.send('Invalid token')
     return false
   }
-
-  const allUsers = await (await pool.query('SELECT * FROM users')).rows
+  const allUsers = await getAllUsersModel();
   res.send(allUsers)
   return true
 }
+export async function getAllUsersModel(){
+ return await (await pool.query('SELECT * FROM users')).rows
+}
 //Get user by id
 export const getUser = async (req: Request, res: Response) => {
-  console.log('hello');
-  
   try {
     jwt.verify(req.headers.token, process.env.TOKEN_SECRET)
   } catch (err) {
@@ -78,9 +93,8 @@ export const getUser = async (req: Request, res: Response) => {
     return false
   }
   let id = req.params
-  console.log('id heloo',id);
-  
-  const user = await (await pool.query('SELECT * FROM users WHERE userid = $1', [id.id])).rows
+
+  const user = await getUserByIdModal(id)
   if (user.length > 0) {
     res.send(user)
     return true
@@ -88,10 +102,12 @@ export const getUser = async (req: Request, res: Response) => {
   res.send('user is not exist')
   return false
 }
+
+export async function getUserByIdModal(id:any) {
+  return await (await pool.query('SELECT * FROM users WHERE userid = $1', [id.id])).rows
+} 
 //Delete user
 export const deleteUser = async (req: Request, res: Response) => {
-  console.log(req.params);
-  
   try {
     jwt.verify(req.headers.token, process.env.TOKEN_SECRET)
   } catch (err) {
@@ -100,8 +116,8 @@ export const deleteUser = async (req: Request, res: Response) => {
     return false
   }
   let id = req.params
-  console.log('delete ',id);
-  
+  console.log('delete ', id)
+
   const user = await (await pool.query('Delete FROM users WHERE userid = $1', [id.id])).rows
   res.send('The user is not exist anymore')
   return true
@@ -138,3 +154,4 @@ async function validateLogin(enterPassword: string, salt: string, password: stri
 function hashPassword(password: string, salt: string): Promise<string> {
   return bcrypt.hash(password, salt)
 }
+

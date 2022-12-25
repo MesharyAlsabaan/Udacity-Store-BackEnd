@@ -41,6 +41,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var supertest_1 = __importDefault(require("supertest"));
 var index_1 = __importDefault(require("../index"));
+var users_1 = require("../models/users");
 // create a request object
 var request = (0, supertest_1.default)(index_1.default);
 var token = '';
@@ -286,3 +287,41 @@ function getToken() {
         });
     });
 }
+describe('create user model method', function () {
+    it('test create user model method', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var result;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, (0, users_1.createUserModels)(1, 'meshari', 'alsabaan', 'ir', 'Riyadh', 'me@gmail.com', 'MM')];
+                case 1:
+                    result = _a.sent();
+                    expect(result).toBe(true);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+});
+describe('get all user model method', function () {
+    it('test get all user model method', function () { return __awaiter(void 0, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, (0, users_1.getAllUsersModel)()];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+});
+describe('get user by id model method', function () {
+    it('test get user by id model method', function () { return __awaiter(void 0, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, (0, users_1.getUserByIdModal)(1)];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+});

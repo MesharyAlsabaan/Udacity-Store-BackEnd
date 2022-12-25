@@ -1,5 +1,8 @@
 import supertest from 'supertest'
 import app from '../index'
+import {createOrder} from '../models/order'
+import { Request, Response } from 'express'
+import {createUserModels,getAllUsersModel,getUserByIdModal} from '../models/users'
 
 // create a request object
 const request = supertest(app)
@@ -34,6 +37,7 @@ describe('login user', () => {
     expect(response.status).toBe(200)
   })
 })
+
 
 describe('get all users', () => {
   it('test get all users endpoint', async () => {
@@ -153,3 +157,25 @@ async function getToken() {
   token = response.body
   return response.body
 }
+
+
+
+
+
+describe('create user model method', () => {
+  it('test create user model method', async () => {
+   let result = await createUserModels(1,'meshari','alsabaan','ir','Riyadh','me@gmail.com','MM');
+
+   expect(result).toBe(true);
+  })
+})
+describe('get all user model method', () => {
+  it('test get all user model method', async () => {
+    await getAllUsersModel();
+  })
+})
+describe('get user by id model method', () => {
+  it('test get user by id model method', async () => {
+    await getUserByIdModal(1);
+  })
+})

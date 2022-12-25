@@ -17,26 +17,11 @@ export const createProduct = async (req: Request, res: Response) => {
 }
 
 export const getAllProducts = async (req: Request, res: Response) => {
-  try {
-    jwt.verify(req.headers.token, process.env.TOKEN_SECRET)
-  } catch (err) {
-    res.status(401)
-    res.send('Invalid token')
-    return false
-  }
-
   const allProducts = await (await pool.query('SELECT * FROM products')).rows
   res.send(allProducts)
   return true
 }
 export const getProduct = async (req: Request, res: Response) => {
-  try {
-    jwt.verify(req.headers.token, process.env.TOKEN_SECRET)
-  } catch (err) {
-    res.status(401)
-    res.send('Invalid token')
-    return false
-  }
   let id = req.params
   const product = await (await pool.query('SELECT * FROM products WHERE id = $1', [id.id])).rows
 

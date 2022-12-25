@@ -67,16 +67,7 @@ var getAllProducts = function (req, res) { return __awaiter(void 0, void 0, void
     var allProducts;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0:
-                try {
-                    jwt.verify(req.headers.token, process.env.TOKEN_SECRET);
-                }
-                catch (err) {
-                    res.status(401);
-                    res.send('Invalid token');
-                    return [2 /*return*/, false];
-                }
-                return [4 /*yield*/, database_1.pool.query('SELECT * FROM products')];
+            case 0: return [4 /*yield*/, database_1.pool.query('SELECT * FROM products')];
             case 1: return [4 /*yield*/, (_a.sent()).rows];
             case 2:
                 allProducts = _a.sent();
@@ -91,14 +82,6 @@ var getProduct = function (req, res) { return __awaiter(void 0, void 0, void 0, 
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                try {
-                    jwt.verify(req.headers.token, process.env.TOKEN_SECRET);
-                }
-                catch (err) {
-                    res.status(401);
-                    res.send('Invalid token');
-                    return [2 /*return*/, false];
-                }
                 id = req.params;
                 return [4 /*yield*/, database_1.pool.query('SELECT * FROM products WHERE id = $1', [id.id])];
             case 1: return [4 /*yield*/, (_a.sent()).rows];

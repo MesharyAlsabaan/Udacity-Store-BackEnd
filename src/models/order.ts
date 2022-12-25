@@ -53,7 +53,6 @@ export const deleteOrder = async (req: Request, res: Response) => {
     return false
   }
   let id = req.params
-  console.log(id.userId);
   
   
   const order = await (await pool.query('Delete FROM orders WHERE userId = $1', [id.userId])).rows

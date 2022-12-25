@@ -59,13 +59,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateUser = exports.deleteUser = exports.getUser = exports.getUsers = exports.login = exports.createUser = void 0;
+exports.updateUser = exports.deleteUser = exports.getUserByIdModal = exports.getUser = exports.getAllUsersModel = exports.getUsers = exports.login = exports.createUserModels = exports.createUser = void 0;
 var database_1 = require("../database");
 var bcrypt = __importStar(require("bcryptjs"));
 var jwt = require('jsonwebtoken');
 //Sign Up
 var createUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, firstName, lastName, address, city, email, password, id, emailResult, salt, hashedPassword;
+    var _a, firstName, lastName, address, city, email, password, id, emailResult;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -80,14 +80,8 @@ var createUser = function (req, res) { return __awaiter(void 0, void 0, void 0, 
                     res.send('Email is Already Exist');
                     return [2 /*return*/];
                 }
-                return [4 /*yield*/, bcrypt.genSalt()];
+                return [4 /*yield*/, createUserModels(id, firstName, lastName, address, city, email, password)];
             case 3:
-                salt = _b.sent();
-                return [4 /*yield*/, hashPassword(password, salt)];
-            case 4:
-                hashedPassword = _b.sent();
-                return [4 /*yield*/, database_1.pool.query('INSERT INTO users(userid,firstname,lastname,address,city, email,password,salt) VALUES($1, $2,$3,$4,$5,$6,$7,$8)', [id, firstName, lastName, address, city, email, hashedPassword, salt])];
-            case 5:
                 _b.sent();
                 res.send('Thank you for creating account');
                 return [2 /*return*/];
@@ -95,6 +89,26 @@ var createUser = function (req, res) { return __awaiter(void 0, void 0, void 0, 
     });
 }); };
 exports.createUser = createUser;
+function createUserModels(id, firstName, lastName, address, city, email, password) {
+    return __awaiter(this, void 0, void 0, function () {
+        var salt, hashedPassword;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, bcrypt.genSalt()];
+                case 1:
+                    salt = _a.sent();
+                    return [4 /*yield*/, hashPassword(password, salt)];
+                case 2:
+                    hashedPassword = _a.sent();
+                    return [4 /*yield*/, database_1.pool.query('INSERT INTO users(userid,firstname,lastname,address,city, email,password,salt) VALUES($1, $2,$3,$4,$5,$6,$7,$8)', [id, firstName, lastName, address, city, email, hashedPassword, salt])];
+                case 3:
+                    _a.sent();
+                    return [2 /*return*/, true];
+            }
+        });
+    });
+}
+exports.createUserModels = createUserModels;
 // Login user and return token
 var login = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var _a, email, password, user, correctCredential, token;
@@ -144,9 +158,8 @@ var getUsers = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
                     res.send('Invalid token');
                     return [2 /*return*/, false];
                 }
-                return [4 /*yield*/, database_1.pool.query('SELECT * FROM users')];
-            case 1: return [4 /*yield*/, (_a.sent()).rows];
-            case 2:
+                return [4 /*yield*/, getAllUsersModel()];
+            case 1:
                 allUsers = _a.sent();
                 res.send(allUsers);
                 return [2 /*return*/, true];
@@ -154,13 +167,24 @@ var getUsers = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
     });
 }); };
 exports.getUsers = getUsers;
+function getAllUsersModel() {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, database_1.pool.query('SELECT * FROM users')];
+                case 1: return [4 /*yield*/, (_a.sent()).rows];
+                case 2: return [2 /*return*/, _a.sent()];
+            }
+        });
+    });
+}
+exports.getAllUsersModel = getAllUsersModel;
 //Get user by id
 var getUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var id, user;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                console.log('hello');
                 try {
                     jwt.verify(req.headers.token, process.env.TOKEN_SECRET);
                 }
@@ -170,10 +194,8 @@ var getUser = function (req, res) { return __awaiter(void 0, void 0, void 0, fun
                     return [2 /*return*/, false];
                 }
                 id = req.params;
-                console.log('id heloo', id);
-                return [4 /*yield*/, database_1.pool.query('SELECT * FROM users WHERE userid = $1', [id.id])];
-            case 1: return [4 /*yield*/, (_a.sent()).rows];
-            case 2:
+                return [4 /*yield*/, getUserByIdModal(id)];
+            case 1:
                 user = _a.sent();
                 if (user.length > 0) {
                     res.send(user);
@@ -185,13 +207,24 @@ var getUser = function (req, res) { return __awaiter(void 0, void 0, void 0, fun
     });
 }); };
 exports.getUser = getUser;
+function getUserByIdModal(id) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, database_1.pool.query('SELECT * FROM users WHERE userid = $1', [id.id])];
+                case 1: return [4 /*yield*/, (_a.sent()).rows];
+                case 2: return [2 /*return*/, _a.sent()];
+            }
+        });
+    });
+}
+exports.getUserByIdModal = getUserByIdModal;
 //Delete user
 var deleteUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var id, user;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                console.log(req.params);
                 try {
                     jwt.verify(req.headers.token, process.env.TOKEN_SECRET);
                 }

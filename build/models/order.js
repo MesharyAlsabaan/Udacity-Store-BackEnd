@@ -113,7 +113,6 @@ var deleteOrder = function (req, res) { return __awaiter(void 0, void 0, void 0,
                     return [2 /*return*/, false];
                 }
                 id = req.params;
-                console.log(id.userId);
                 return [4 /*yield*/, database_1.pool.query('Delete FROM orders WHERE userId = $1', [id.userId])];
             case 1: return [4 /*yield*/, (_a.sent()).rows];
             case 2:
