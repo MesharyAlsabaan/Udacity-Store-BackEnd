@@ -3,7 +3,9 @@ import morgan from 'morgan'
 import * as dotenv from 'dotenv'
 
 
-import indexRoutes from './routes/index';
+import indexRoutes from './handlers/user';
+import productRoutes from './handlers/product';
+import orderRoutes from './handlers/order';
 var bodyParser = require('body-parser')
 
 
@@ -24,7 +26,7 @@ app.use(bodyParser.json())
 app.listen(PORT, () => {
   console.log(`Server is starting at prot:${PORT}`)
 })
-app.use(indexRoutes);
+app.use(indexRoutes,productRoutes,orderRoutes);
 
 
 export default app

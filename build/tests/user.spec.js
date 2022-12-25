@@ -44,6 +44,8 @@ var index_1 = __importDefault(require("../index"));
 // create a request object
 var request = (0, supertest_1.default)(index_1.default);
 var token = '';
+var id = '';
+var orderId = '';
 describe('create user', function () {
     it('test create user endpoint', function () { return __awaiter(void 0, void 0, void 0, function () {
         var response;
@@ -55,7 +57,7 @@ describe('create user', function () {
                         firstName: 'dkdk',
                         lastName: 'lalal',
                         city: 'Riyadh',
-                        address: 'Irqah',
+                        address: 'Irqah'
                     })];
                 case 1:
                     response = _a.sent();
@@ -70,9 +72,12 @@ describe('login user', function () {
         var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, request.post('/user/login').set('Content-type', 'application/json').send({
+                case 0: return [4 /*yield*/, request
+                        .post('/user/login')
+                        .set('Content-type', 'application/json')
+                        .send({
                         email: 'tes1t@gmail.com',
-                        password: 'Mm1212',
+                        password: 'Mm1212'
                     })];
                 case 1:
                     response = _a.sent();
@@ -90,10 +95,29 @@ describe('get all users', function () {
                 case 0: return [4 /*yield*/, getToken()];
                 case 1:
                     token = _a.sent();
-                    return [4 /*yield*/, request.get('/user').set('Content-type', 'application/json').send({
-                            token: token
-                        })];
+                    return [4 /*yield*/, request
+                            .get('/user')
+                            .set('Content-type', 'application/json')
+                            .set('token', "".concat(token))];
                 case 2:
+                    response = _a.sent();
+                    expect(response.status).toBe(200);
+                    id = response.body[0].userid;
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+});
+describe('get user by id', function () {
+    it('test get user by id endpoint', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, request
+                        .get("/user/".concat(id))
+                        .set('Content-type', 'application/json')
+                        .set('token', "".concat(token))];
+                case 1:
                     response = _a.sent();
                     expect(response.status).toBe(200);
                     return [2 /*return*/];
@@ -103,18 +127,18 @@ describe('get all users', function () {
 });
 describe('create product', function () {
     it('test create product endpoint', function () { return __awaiter(void 0, void 0, void 0, function () {
-        var token, response;
+        var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, getToken()];
+                case 0: return [4 /*yield*/, request
+                        .post('/product')
+                        .set('Content-type', 'application/json')
+                        .set('token', "".concat(token))
+                        .send({
+                        name: 'perfume',
+                        price: '500'
+                    })];
                 case 1:
-                    token = _a.sent();
-                    return [4 /*yield*/, request.post('/product').set('Content-type', 'application/json').send({
-                            name: 'perfume',
-                            price: '500',
-                            token: token
-                        })];
-                case 2:
                     response = _a.sent();
                     expect(response.status).toBe(200);
                     return [2 /*return*/];
@@ -122,18 +146,122 @@ describe('create product', function () {
         });
     }); });
 });
-describe('create product', function () {
-    it('test create product endpoint', function () { return __awaiter(void 0, void 0, void 0, function () {
-        var token, response;
+describe('get product', function () {
+    it('test get product endpoint', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, getToken()];
+                case 0: return [4 /*yield*/, request
+                        .get('/product')
+                        .set('Content-type', 'application/json')
+                        .set('token', "".concat(token))];
                 case 1:
-                    token = _a.sent();
-                    return [4 /*yield*/, request.get('/product').set('Content-type', 'application/json').send({
-                            token: token
-                        })];
-                case 2:
+                    response = _a.sent();
+                    expect(response.status).toBe(200);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+});
+describe('gel all products', function () {
+    it('test get all products endpoint', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, request
+                        .get("/product")
+                        .set('Content-type', 'application/json')
+                        .set('token', "".concat(token))];
+                case 1:
+                    response = _a.sent();
+                    expect(response.status).toBe(200);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+});
+describe('create order', function () {
+    it('test create order endpoint', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, request
+                        .post("/order/".concat(id))
+                        .set('Content-type', 'application/json')
+                        .set('token', "".concat(token))];
+                case 1:
+                    response = _a.sent();
+                    expect(response.status).toBe(200);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+});
+describe('get order', function () {
+    it('test create order endpoint', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, request
+                        .get("/order/".concat(id))
+                        .set('Content-type', 'application/json')
+                        .set('token', "".concat(token))];
+                case 1:
+                    response = _a.sent();
+                    orderId = response.body[0].id;
+                    expect(response.status).toBe(200);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+});
+describe('delete order', function () {
+    it('test delete order endpoint', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, request
+                        .delete("/order/".concat(id))
+                        .set('Content-type', 'application/json')
+                        .set('token', "".concat(token))];
+                case 1:
+                    response = _a.sent();
+                    expect(response.status).toBe(200);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+});
+describe('update user', function () {
+    it('test update user endpoint', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, request
+                        .put("/user/".concat(id))
+                        .set('Content-type', 'application/json')
+                        .set('token', "".concat(token))
+                        .send({
+                        email: 'tes2t@gmail.com'
+                    })];
+                case 1:
+                    response = _a.sent();
+                    expect(response.status).toBe(200);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+});
+describe('delete user', function () {
+    it('test delete user endpoint', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, request
+                        .delete("/user/".concat(id))
+                        .set('Content-type', 'application/json')
+                        .set('token', "".concat(token))];
+                case 1:
                     response = _a.sent();
                     expect(response.status).toBe(200);
                     return [2 /*return*/];
@@ -148,10 +276,11 @@ function getToken() {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, request.post('/user/login').set('Content-type', 'application/json').send({
                         email: 'tes1t@gmail.com',
-                        password: 'Mm1212',
+                        password: 'Mm1212'
                     })];
                 case 1:
                     response = _a.sent();
+                    token = response.body;
                     return [2 /*return*/, response.body];
             }
         });

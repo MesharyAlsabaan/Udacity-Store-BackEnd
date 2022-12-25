@@ -132,14 +132,12 @@ var login = function (req, res) { return __awaiter(void 0, void 0, void 0, funct
 exports.login = login;
 //Get all users
 var getUsers = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var z, allUsers;
+    var allUsers;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                z = req;
-                console.log('ddd', z);
                 try {
-                    jwt.verify(req.body.token, process.env.TOKEN_SECRET);
+                    jwt.verify(req.headers.token, process.env.TOKEN_SECRET);
                 }
                 catch (err) {
                     res.status(401);
@@ -162,8 +160,9 @@ var getUser = function (req, res) { return __awaiter(void 0, void 0, void 0, fun
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
+                console.log('hello');
                 try {
-                    jwt.verify(req.body.token, process.env.TOKEN_SECRET);
+                    jwt.verify(req.headers.token, process.env.TOKEN_SECRET);
                 }
                 catch (err) {
                     res.status(401);
@@ -171,6 +170,7 @@ var getUser = function (req, res) { return __awaiter(void 0, void 0, void 0, fun
                     return [2 /*return*/, false];
                 }
                 id = req.params;
+                console.log('id heloo', id);
                 return [4 /*yield*/, database_1.pool.query('SELECT * FROM users WHERE userid = $1', [id.id])];
             case 1: return [4 /*yield*/, (_a.sent()).rows];
             case 2:
@@ -191,8 +191,9 @@ var deleteUser = function (req, res) { return __awaiter(void 0, void 0, void 0, 
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
+                console.log(req.params);
                 try {
-                    jwt.verify(req.body.token, process.env.TOKEN_SECRET);
+                    jwt.verify(req.headers.token, process.env.TOKEN_SECRET);
                 }
                 catch (err) {
                     res.status(401);
@@ -200,13 +201,11 @@ var deleteUser = function (req, res) { return __awaiter(void 0, void 0, void 0, 
                     return [2 /*return*/, false];
                 }
                 id = req.params;
+                console.log('delete ', id);
                 return [4 /*yield*/, database_1.pool.query('Delete FROM users WHERE userid = $1', [id.id])];
-            case 1: return [4 /*yield*/, (_a.sent()).rows
-                // console.log(user)
-            ];
+            case 1: return [4 /*yield*/, (_a.sent()).rows];
             case 2:
                 user = _a.sent();
-                // console.log(user)
                 res.send('The user is not exist anymore');
                 return [2 /*return*/, true];
         }
@@ -220,7 +219,7 @@ var updateUser = function (req, res) { return __awaiter(void 0, void 0, void 0, 
         switch (_a.label) {
             case 0:
                 try {
-                    jwt.verify(req.body.token, process.env.TOKEN_SECRET);
+                    jwt.verify(req.headers.token, process.env.TOKEN_SECRET);
                 }
                 catch (err) {
                     res.status(401);

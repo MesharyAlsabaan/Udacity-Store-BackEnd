@@ -29,7 +29,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
 var morgan_1 = __importDefault(require("morgan"));
 var dotenv = __importStar(require("dotenv"));
-var index_1 = __importDefault(require("./routes/index"));
+var user_1 = __importDefault(require("./handlers/user"));
+var product_1 = __importDefault(require("./handlers/product"));
+var order_1 = __importDefault(require("./handlers/order"));
 var bodyParser = require('body-parser');
 dotenv.config();
 var PORT = process.env.PORT || 3000;
@@ -43,5 +45,5 @@ app.use(bodyParser.json());
 app.listen(PORT, function () {
     console.log("Server is starting at prot:".concat(PORT));
 });
-app.use(index_1.default);
+app.use(user_1.default, product_1.default, order_1.default);
 exports.default = app;

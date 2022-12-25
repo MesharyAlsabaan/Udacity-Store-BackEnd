@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getOrder = exports.createOrder = void 0;
+exports.deleteOrder = exports.getOrder = exports.createOrder = void 0;
 var database_1 = require("../database");
 var jwt = require('jsonwebtoken');
 var createOrder = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
@@ -45,7 +45,7 @@ var createOrder = function (req, res) { return __awaiter(void 0, void 0, void 0,
         switch (_a.label) {
             case 0:
                 try {
-                    jwt.verify(req.body.token, process.env.TOKEN_SECRET);
+                    jwt.verify(req.headers.token, process.env.TOKEN_SECRET);
                 }
                 catch (err) {
                     res.status(401);
@@ -74,7 +74,7 @@ var getOrder = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
         switch (_a.label) {
             case 0:
                 try {
-                    jwt.verify(req.body.token, process.env.TOKEN_SECRET);
+                    jwt.verify(req.headers.token, process.env.TOKEN_SECRET);
                 }
                 catch (err) {
                     res.status(401);
@@ -99,3 +99,28 @@ var getOrder = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
     });
 }); };
 exports.getOrder = getOrder;
+var deleteOrder = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var id, order;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                try {
+                    jwt.verify(req.headers.token, process.env.TOKEN_SECRET);
+                }
+                catch (err) {
+                    res.status(401);
+                    res.send('Invalid token');
+                    return [2 /*return*/, false];
+                }
+                id = req.params;
+                console.log(id.userId);
+                return [4 /*yield*/, database_1.pool.query('Delete FROM orders WHERE userId = $1', [id.userId])];
+            case 1: return [4 /*yield*/, (_a.sent()).rows];
+            case 2:
+                order = _a.sent();
+                res.send('The order is not exist anymore');
+                return [2 /*return*/, true];
+        }
+    });
+}); };
+exports.deleteOrder = deleteOrder;

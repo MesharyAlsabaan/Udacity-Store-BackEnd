@@ -22,6 +22,7 @@ export const createUser = async (req: Request, res: Response) => {
     [id, firstName, lastName, address, city, email, hashedPassword, salt]
   )
   res.send('Thank you for creating account')
+  return;
 }
 
 // Login user and return token
@@ -67,6 +68,8 @@ export const getUsers = async (req: Request, res: Response) => {
 }
 //Get user by id
 export const getUser = async (req: Request, res: Response) => {
+  console.log('hello');
+  
   try {
     jwt.verify(req.headers.token, process.env.TOKEN_SECRET)
   } catch (err) {
@@ -75,6 +78,8 @@ export const getUser = async (req: Request, res: Response) => {
     return false
   }
   let id = req.params
+  console.log('id heloo',id);
+  
   const user = await (await pool.query('SELECT * FROM users WHERE userid = $1', [id.id])).rows
   if (user.length > 0) {
     res.send(user)
@@ -85,6 +90,8 @@ export const getUser = async (req: Request, res: Response) => {
 }
 //Delete user
 export const deleteUser = async (req: Request, res: Response) => {
+  console.log(req.params);
+  
   try {
     jwt.verify(req.headers.token, process.env.TOKEN_SECRET)
   } catch (err) {
@@ -93,8 +100,9 @@ export const deleteUser = async (req: Request, res: Response) => {
     return false
   }
   let id = req.params
+  console.log('delete ',id);
+  
   const user = await (await pool.query('Delete FROM users WHERE userid = $1', [id.id])).rows
-  // console.log(user)
   res.send('The user is not exist anymore')
   return true
 }
@@ -109,7 +117,6 @@ export const updateUser = async (req: Request, res: Response) => {
   }
   let id = req.params
   const { email } = req.body
-  // console.log(email)
 
   const user = await (await pool.query('SELECT * FROM users WHERE userid = $1', [id.id])).rows
   if (user.length > 0) {

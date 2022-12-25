@@ -42,3 +42,21 @@ export const getOrder = async (req: Request, res: Response) => {
     return false
   }
 }
+
+export const deleteOrder = async (req: Request, res: Response) => {
+  
+  try {
+    jwt.verify(req.headers.token, process.env.TOKEN_SECRET)
+  } catch (err) {
+    res.status(401)
+    res.send('Invalid token')
+    return false
+  }
+  let id = req.params
+  console.log(id.userId);
+  
+  
+  const order = await (await pool.query('Delete FROM orders WHERE userId = $1', [id.userId])).rows
+  res.send('The order is not exist anymore')
+  return true
+}

@@ -24,7 +24,6 @@ export const getAllProducts = async (req: Request, res: Response) => {
     res.send('Invalid token')
     return false
   }
-  console.log('test');
 
   const allProducts = await (await pool.query('SELECT * FROM products')).rows
   res.send(allProducts)
