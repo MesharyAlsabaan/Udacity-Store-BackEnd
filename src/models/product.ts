@@ -18,16 +18,20 @@ export const createProduct = async (req: Request, res: Response) => {
 
 export async function createProductModel(id:number, name:any,price:any){
   await pool.query('INSERT INTO products(id,name,price) VALUES($1, $2,$3)', [id, name, price])
+  return true;
 }
 
 export const getAllProducts = async (req: Request, res: Response) => {
   const allProducts = await getAllProductsModel()
+  
   res.send(allProducts);
   return true;
 }
 
 export async function getAllProductsModel() {
-  return await (await pool.query('SELECT * FROM products')).rows;
+   const allProducts= await (await pool.query('SELECT * FROM products')).rows;
+   return allProducts;
+   
 }
 export const getProduct = async (req: Request, res: Response) => {
   let id = req.params

@@ -173,40 +173,53 @@ describe('create user model method', () => {
 })
 describe('get all user model method', () => {
   it('test get all user model method', async () => {
-    await getAllUsersModel();
+   const result = await getAllUsersModel();
+  expect(result[0].userid).toBe(1);
+
   })
 })
 describe('get user by id model method', () => {
   it('test get user by id model method', async () => {
-    await getUserByIdModal(1);
+   const result = await getUserByIdModal(1);
+   console.log(result);
+   
+   expect(result[0].userid).toBe(1);
   })
 })
 
 describe('create order model method', () => {
   it('test create order model method', async () => {
-   await createOrderModel(100,1);
+  const result = await createOrderModel(100,1);
+  expect(result).toBe(true);
+
+
   })
 })
-describe('create order model method', () => {
-  it('test create order model method', async () => {
-   await getOrderModel(1);
+describe('get order by userid model method', () => {
+  it('test get order by userid model method', async () => {
+  const result = await getOrderModel(1);
+  expect(result[0].userid).toBe('1');
   })
 })
 
 
 describe('create product model method', () => {
   it('test create product model method', async () => {
-    await createProductModel(1,'car','12');
+   const result =  await createProductModel(1,'car','500');
+   expect(result).toBe(true);
   })
 })
 describe('get all products model method', () => {
   it('test get all products model method', async () => {
-    await getAllProductsModel();
+    const result =  await getAllProductsModel();
+    expect(result[0].price).toBe(500);
   })
 })
 describe('get product by id model method', () => {
   it('test get product by id model method', async () => {
-    await getProductModel(1);
+   const result = await getProductModel(1);
+   expect(result[0].id).toBe(1);
+   
   })
 })
 

@@ -74,7 +74,7 @@ function createOrderModel(id, userId) {
                     ])];
                 case 1:
                     _a.sent();
-                    return [2 /*return*/];
+                    return [2 /*return*/, true];
             }
         });
     });

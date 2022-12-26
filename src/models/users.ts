@@ -94,7 +94,7 @@ export const getUser = async (req: Request, res: Response) => {
   }
   let id = req.params
 
-  const user = await getUserByIdModal(id)
+  const user = await getUserByIdModal(id.id)
   if (user.length > 0) {
     res.send(user)
     return true
@@ -104,7 +104,7 @@ export const getUser = async (req: Request, res: Response) => {
 }
 
 export async function getUserByIdModal(id:any) {
-  return await (await pool.query('SELECT * FROM users WHERE userid = $1', [id.id])).rows
+  return await (await pool.query('SELECT * FROM users WHERE userid = $1', [id])).rows
 } 
 //Delete user
 export const deleteUser = async (req: Request, res: Response) => {

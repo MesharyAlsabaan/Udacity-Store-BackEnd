@@ -306,11 +306,13 @@ describe('create user model method', function () {
 });
 describe('get all user model method', function () {
     it('test get all user model method', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var result;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, (0, users_1.getAllUsersModel)()];
                 case 1:
-                    _a.sent();
+                    result = _a.sent();
+                    expect(result[0].userid).toBe(1);
                     return [2 /*return*/];
             }
         });
@@ -318,11 +320,14 @@ describe('get all user model method', function () {
 });
 describe('get user by id model method', function () {
     it('test get user by id model method', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var result;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, (0, users_1.getUserByIdModal)(1)];
                 case 1:
-                    _a.sent();
+                    result = _a.sent();
+                    console.log(result);
+                    expect(result[0].userid).toBe(1);
                     return [2 /*return*/];
             }
         });
@@ -330,23 +335,27 @@ describe('get user by id model method', function () {
 });
 describe('create order model method', function () {
     it('test create order model method', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var result;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, (0, order_2.createOrderModel)(100, 1)];
                 case 1:
-                    _a.sent();
+                    result = _a.sent();
+                    expect(result).toBe(true);
                     return [2 /*return*/];
             }
         });
     }); });
 });
-describe('create order model method', function () {
-    it('test create order model method', function () { return __awaiter(void 0, void 0, void 0, function () {
+describe('get order by userid model method', function () {
+    it('test get order by userid model method', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var result;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, (0, order_1.getOrderModel)(1)];
                 case 1:
-                    _a.sent();
+                    result = _a.sent();
+                    expect(result[0].userid).toBe('1');
                     return [2 /*return*/];
             }
         });
@@ -354,11 +363,13 @@ describe('create order model method', function () {
 });
 describe('create product model method', function () {
     it('test create product model method', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var result;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, (0, product_1.createProductModel)(1, 'car', '12')];
+                case 0: return [4 /*yield*/, (0, product_1.createProductModel)(1, 'car', '500')];
                 case 1:
-                    _a.sent();
+                    result = _a.sent();
+                    expect(result).toBe(true);
                     return [2 /*return*/];
             }
         });
@@ -366,11 +377,13 @@ describe('create product model method', function () {
 });
 describe('get all products model method', function () {
     it('test get all products model method', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var result;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, (0, product_1.getAllProductsModel)()];
                 case 1:
-                    _a.sent();
+                    result = _a.sent();
+                    expect(result[0].price).toBe(500);
                     return [2 /*return*/];
             }
         });
@@ -378,11 +391,13 @@ describe('get all products model method', function () {
 });
 describe('get product by id model method', function () {
     it('test get product by id model method', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var result;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, (0, product_1.getProductModel)(1)];
                 case 1:
-                    _a.sent();
+                    result = _a.sent();
+                    expect(result[0].id).toBe(1);
                     return [2 /*return*/];
             }
         });

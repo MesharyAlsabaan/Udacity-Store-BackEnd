@@ -194,7 +194,7 @@ var getUser = function (req, res) { return __awaiter(void 0, void 0, void 0, fun
                     return [2 /*return*/, false];
                 }
                 id = req.params;
-                return [4 /*yield*/, getUserByIdModal(id)];
+                return [4 /*yield*/, getUserByIdModal(id.id)];
             case 1:
                 user = _a.sent();
                 if (user.length > 0) {
@@ -211,7 +211,7 @@ function getUserByIdModal(id) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, database_1.pool.query('SELECT * FROM users WHERE userid = $1', [id.id])];
+                case 0: return [4 /*yield*/, database_1.pool.query('SELECT * FROM users WHERE userid = $1', [id])];
                 case 1: return [4 /*yield*/, (_a.sent()).rows];
                 case 2: return [2 /*return*/, _a.sent()];
             }
