@@ -12,19 +12,26 @@ export const createProduct = async (req: Request, res: Response) => {
   }
   let id = Math.floor(Math.random() * 10000)
   const { name, price } = req.body
-  await pool.query('INSERT INTO products(id,name,price) VALUES($1, $2,$3)', [id, name, price])
+  await createProductModel(id,name,price)
   res.send('The product was created :)')
 }
 
+export async function createProductModel(id:number, name:any,price:any){
+  await pool.query('INSERT INTO products(id,name,price) VALUES($1, $2,$3)', [id, name, price])
+}
+
 export const getAllProducts = async (req: Request, res: Response) => {
-  const allProducts = await (await pool.query('SELECT * FROM products')).rows
-  res.send(allProducts)
-  return true
+  const allProducts = await getAllProductsModel()
+  res.send(allProducts);
+  return true;
+}
+
+export async function getAllProductsModel() {
+  return await (await pool.query('SELECT * FROM products')).rows;
 }
 export const getProduct = async (req: Request, res: Response) => {
   let id = req.params
-  const product = await (await pool.query('SELECT * FROM products WHERE id = $1', [id.id])).rows
-
+  const product = await getProductModel(id.id);
   if (product.length > 0) {
     res.send(product)
     return true
@@ -33,3 +40,8 @@ export const getProduct = async (req: Request, res: Response) => {
     return false
   }
 }
+
+export async function getProductModel(id:any) {
+  return await (await pool.query('SELECT * FROM products WHERE id = $1', [id])).rows
+}
+

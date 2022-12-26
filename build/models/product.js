@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getProduct = exports.getAllProducts = exports.createProduct = void 0;
+exports.getProductModel = exports.getProduct = exports.getAllProductsModel = exports.getAllProducts = exports.createProductModel = exports.createProduct = void 0;
 var database_1 = require("../database");
 var jwt = require('jsonwebtoken');
 var createProduct = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
@@ -54,7 +54,7 @@ var createProduct = function (req, res) { return __awaiter(void 0, void 0, void 
                 }
                 id = Math.floor(Math.random() * 10000);
                 _a = req.body, name = _a.name, price = _a.price;
-                return [4 /*yield*/, database_1.pool.query('INSERT INTO products(id,name,price) VALUES($1, $2,$3)', [id, name, price])];
+                return [4 /*yield*/, createProductModel(id, name, price)];
             case 1:
                 _b.sent();
                 res.send('The product was created :)');
@@ -63,13 +63,25 @@ var createProduct = function (req, res) { return __awaiter(void 0, void 0, void 
     });
 }); };
 exports.createProduct = createProduct;
+function createProductModel(id, name, price) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, database_1.pool.query('INSERT INTO products(id,name,price) VALUES($1, $2,$3)', [id, name, price])];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.createProductModel = createProductModel;
 var getAllProducts = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var allProducts;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, database_1.pool.query('SELECT * FROM products')];
-            case 1: return [4 /*yield*/, (_a.sent()).rows];
-            case 2:
+            case 0: return [4 /*yield*/, getAllProductsModel()];
+            case 1:
                 allProducts = _a.sent();
                 res.send(allProducts);
                 return [2 /*return*/, true];
@@ -77,15 +89,26 @@ var getAllProducts = function (req, res) { return __awaiter(void 0, void 0, void
     });
 }); };
 exports.getAllProducts = getAllProducts;
+function getAllProductsModel() {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, database_1.pool.query('SELECT * FROM products')];
+                case 1: return [4 /*yield*/, (_a.sent()).rows];
+                case 2: return [2 /*return*/, _a.sent()];
+            }
+        });
+    });
+}
+exports.getAllProductsModel = getAllProductsModel;
 var getProduct = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var id, product;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 id = req.params;
-                return [4 /*yield*/, database_1.pool.query('SELECT * FROM products WHERE id = $1', [id.id])];
-            case 1: return [4 /*yield*/, (_a.sent()).rows];
-            case 2:
+                return [4 /*yield*/, getProductModel(id.id)];
+            case 1:
                 product = _a.sent();
                 if (product.length > 0) {
                     res.send(product);
@@ -100,3 +123,15 @@ var getProduct = function (req, res) { return __awaiter(void 0, void 0, void 0, 
     });
 }); };
 exports.getProduct = getProduct;
+function getProductModel(id) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, database_1.pool.query('SELECT * FROM products WHERE id = $1', [id])];
+                case 1: return [4 /*yield*/, (_a.sent()).rows];
+                case 2: return [2 /*return*/, _a.sent()];
+            }
+        });
+    });
+}
+exports.getProductModel = getProductModel;

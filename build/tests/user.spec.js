@@ -41,7 +41,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var supertest_1 = __importDefault(require("supertest"));
 var index_1 = __importDefault(require("../index"));
+var order_1 = require("../models/order");
 var users_1 = require("../models/users");
+var order_2 = require("../models/order");
+var product_1 = require("../models/product");
 // create a request object
 var request = (0, supertest_1.default)(index_1.default);
 var token = '';
@@ -318,6 +321,66 @@ describe('get user by id model method', function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, (0, users_1.getUserByIdModal)(1)];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+});
+describe('create order model method', function () {
+    it('test create order model method', function () { return __awaiter(void 0, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, (0, order_2.createOrderModel)(100, 1)];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+});
+describe('create order model method', function () {
+    it('test create order model method', function () { return __awaiter(void 0, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, (0, order_1.getOrderModel)(1)];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+});
+describe('create product model method', function () {
+    it('test create product model method', function () { return __awaiter(void 0, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, (0, product_1.createProductModel)(1, 'car', '12')];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+});
+describe('get all products model method', function () {
+    it('test get all products model method', function () { return __awaiter(void 0, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, (0, product_1.getAllProductsModel)()];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+});
+describe('get product by id model method', function () {
+    it('test get product by id model method', function () { return __awaiter(void 0, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, (0, product_1.getProductModel)(1)];
                 case 1:
                     _a.sent();
                     return [2 /*return*/];

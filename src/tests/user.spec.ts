@@ -1,8 +1,10 @@
 import supertest from 'supertest'
 import app from '../index'
-import {createOrder} from '../models/order'
+import {createOrder, getOrderModel} from '../models/order'
 import { Request, Response } from 'express'
 import {createUserModels,getAllUsersModel,getUserByIdModal} from '../models/users'
+import {createOrderModel} from '../models/order';
+import {createProductModel, getAllProductsModel, getProductModel} from '../models/product';
 
 // create a request object
 const request = supertest(app)
@@ -179,3 +181,32 @@ describe('get user by id model method', () => {
     await getUserByIdModal(1);
   })
 })
+
+describe('create order model method', () => {
+  it('test create order model method', async () => {
+   await createOrderModel(100,1);
+  })
+})
+describe('create order model method', () => {
+  it('test create order model method', async () => {
+   await getOrderModel(1);
+  })
+})
+
+
+describe('create product model method', () => {
+  it('test create product model method', async () => {
+    await createProductModel(1,'car','12');
+  })
+})
+describe('get all products model method', () => {
+  it('test get all products model method', async () => {
+    await getAllProductsModel();
+  })
+})
+describe('get product by id model method', () => {
+  it('test get product by id model method', async () => {
+    await getProductModel(1);
+  })
+})
+

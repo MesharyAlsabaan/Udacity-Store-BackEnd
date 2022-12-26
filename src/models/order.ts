@@ -13,13 +13,18 @@ export const createOrder = async (req: Request, res: Response) => {
   let id = Math.floor(Math.random() * 10000)
   let userId = req.params
 
+ await createOrderModel(id,userId.userId);
+
+  res.send('The order was created :)')
+}
+
+export async function createOrderModel(id:number,userId:any){
   await pool.query('INSERT INTO orders(id,status,userid) VALUES($1, $2,$3)', [
     id,
     'processing',
-    userId.userId
+    userId
   ])
 
-  res.send('The order was created :)')
 }
 
 // Get order by userId
@@ -32,7 +37,7 @@ export const getOrder = async (req: Request, res: Response) => {
     return false
   }
   let id = req.params
-  const order = await (await pool.query('SELECT * FROM orders WHERE userid = $1', [id.userId])).rows
+  const order = await getOrderModel(id.userId);
 
   if (order.length > 0) {
     res.send(order)
@@ -42,6 +47,11 @@ export const getOrder = async (req: Request, res: Response) => {
     return false
   }
 }
+
+export async function getOrderModel(id:any){
+ return await (await pool.query('SELECT * FROM orders WHERE userid = $1', [id])).rows
+}
+
 
 export const deleteOrder = async (req: Request, res: Response) => {
   

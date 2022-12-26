@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteOrder = exports.getOrder = exports.createOrder = void 0;
+exports.deleteOrder = exports.getOrderModel = exports.getOrder = exports.createOrderModel = exports.createOrder = void 0;
 var database_1 = require("../database");
 var jwt = require('jsonwebtoken');
 var createOrder = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
@@ -54,11 +54,7 @@ var createOrder = function (req, res) { return __awaiter(void 0, void 0, void 0,
                 }
                 id = Math.floor(Math.random() * 10000);
                 userId = req.params;
-                return [4 /*yield*/, database_1.pool.query('INSERT INTO orders(id,status,userid) VALUES($1, $2,$3)', [
-                        id,
-                        'processing',
-                        userId.userId
-                    ])];
+                return [4 /*yield*/, createOrderModel(id, userId.userId)];
             case 1:
                 _a.sent();
                 res.send('The order was created :)');
@@ -67,6 +63,23 @@ var createOrder = function (req, res) { return __awaiter(void 0, void 0, void 0,
     });
 }); };
 exports.createOrder = createOrder;
+function createOrderModel(id, userId) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, database_1.pool.query('INSERT INTO orders(id,status,userid) VALUES($1, $2,$3)', [
+                        id,
+                        'processing',
+                        userId
+                    ])];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.createOrderModel = createOrderModel;
 // Get order by userId
 var getOrder = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var id, order;
@@ -82,9 +95,8 @@ var getOrder = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
                     return [2 /*return*/, false];
                 }
                 id = req.params;
-                return [4 /*yield*/, database_1.pool.query('SELECT * FROM orders WHERE userid = $1', [id.userId])];
-            case 1: return [4 /*yield*/, (_a.sent()).rows];
-            case 2:
+                return [4 /*yield*/, getOrderModel(id.userId)];
+            case 1:
                 order = _a.sent();
                 if (order.length > 0) {
                     res.send(order);
@@ -99,6 +111,18 @@ var getOrder = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
     });
 }); };
 exports.getOrder = getOrder;
+function getOrderModel(id) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, database_1.pool.query('SELECT * FROM orders WHERE userid = $1', [id])];
+                case 1: return [4 /*yield*/, (_a.sent()).rows];
+                case 2: return [2 /*return*/, _a.sent()];
+            }
+        });
+    });
+}
+exports.getOrderModel = getOrderModel;
 var deleteOrder = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var id, order;
     return __generator(this, function (_a) {
