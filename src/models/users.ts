@@ -58,10 +58,12 @@ export const login = async (req: Request, res: Response) => {
       res.json(token)
       return true
     } else {
+      res.status(400)
       res.send('Email or password is not correct')
       return false
     }
   } else {
+    res.status(400)
     res.send('Email is not exist')
     return false
   }

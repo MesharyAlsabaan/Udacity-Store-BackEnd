@@ -1,6 +1,8 @@
 import express, { Application, Request, Response } from 'express'
 import morgan from 'morgan'
 import * as dotenv from 'dotenv'
+var cors = require('cors')
+
 
 
 import indexRoutes from './handlers/user';
@@ -19,6 +21,7 @@ app.use(morgan('short'))
  app.get('/',  (req: Request, res: Response)  => {
   res.send('users');
 })
+app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
