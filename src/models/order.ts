@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { pool } from '../database'
 var jwt = require('jsonwebtoken')
-import {getProductModel } from '../models/product';
+import {getAllProductsModel, getProductModel } from '../models/product';
 
 
 export const createOrder = async (req: Request, res: Response) => {
@@ -74,8 +74,15 @@ export const deleteOrder = async (req: Request, res: Response) => {
 export const addCard = async (req: Request, res: Response) => {
   let userId = req.params
   let orderId = Math.floor(Math.random() * 10000)
-  createOrderModel(orderId, userId.userId)
-  createOrderDetails(orderId, 1552)
+  let productId = await getAllProductsModel();
+  console.log(productId[0].id);
+  
+
+  createOrderModel(orderId, userId.userId).then((value) => {
+    createOrderDetails(orderId, productId[0].id)
+
+  });
+  
 }
 
 export const getCart = async (req: Request, res: Response) => {
@@ -103,8 +110,7 @@ export const getCart = async (req: Request, res: Response) => {
 }
 
 export async function createOrderDetails(orderId: any, productId: any) {
-  console.log(orderId);
-  console.log(productId);
+ 
   
   
   let id = Math.floor(Math.random() * 10000)

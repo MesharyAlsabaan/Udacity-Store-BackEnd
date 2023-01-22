@@ -3,13 +3,13 @@ import { pool } from '../database'
 var jwt = require('jsonwebtoken')
 
 export const createProduct = async (req: Request, res: Response) => {
-  try {
-    jwt.verify(req.headers.token, process.env.TOKEN_SECRET)
-  } catch (err) {
-    res.status(401)
-    res.send('Invalid token')
-    return false
-  }
+  // try {
+  //   jwt.verify(req.headers.token, process.env.TOKEN_SECRET)
+  // } catch (err) {
+  //   res.status(401)
+  //   res.send('Invalid token')
+  //   return false
+  // }
   let id = Math.floor(Math.random() * 10000)
   const { name, price } = req.body
   await createProductModel(id,name,price)
