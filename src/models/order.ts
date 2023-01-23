@@ -64,6 +64,7 @@ export const deleteOrder = async (req: Request, res: Response) => {
     res.send('Invalid token')
     return false
   }
+
   let id = req.params
 
   const order = await (await pool.query('Delete FROM orders WHERE userId = $1', [id.userId])).rows
@@ -71,6 +72,16 @@ export const deleteOrder = async (req: Request, res: Response) => {
   return true
 }
 
+export const deleteCart = async (req: Request, res: Response) => {
+  let id = req.params
+  console.log('id',id);
+  
+
+  const order = await (await pool.query('Delete FROM order_products WHERE id = $1', [id.orderPId])).rows
+  res.send(true)
+  return true
+
+}
 export const addCard = async (req: Request, res: Response) => {
   let userId = req.params
   let orderId = Math.floor(Math.random() * 10000)
@@ -90,7 +101,7 @@ export const getCart = async (req: Request, res: Response) => {
   
   let orders = await getOrderModel(userId.userId)
 
-  let order = [];
+  let order:any = [];
   let newOrders = [];
   let products = [];
 
@@ -100,11 +111,32 @@ export const getCart = async (req: Request, res: Response) => {
       await pool.query('SELECT * FROM order_products WHERE order_id = $1', [orders[i].id])
     ).rows
     products = await getProductModel(order[0]?.product_id)
-    newOrders.push(products[0])
+
+      // console.log(order);
+      
+    let z = products.map((a)=> a = {...a,orderPId: order[0].id})
+    console.log('vv',z);
+    
+
+    // products.map(item =>({
+    //   label:'1223',value:'dhdhdh'
+    // }))
+    // products[0] = "12";
+    // console.log(  products[0]);
+
+    
+    // products[0].push({gg:'j'})
+    
+    newOrders.push(z[0])
+    
+    
+    
   }
   newOrders = newOrders.filter(elements => {
     return elements != undefined;
    });   
+  //  console.log(newOrders);
+   
   res.send(newOrders)
   return newOrders;
 }

@@ -46,6 +46,7 @@ export const getProduct = async (req: Request, res: Response) => {
 }
 
 export async function getProductModel(id:any) {
+  
   return await (await pool.query('SELECT * FROM products WHERE id = $1', [id])).rows
 }
 
